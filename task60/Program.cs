@@ -5,17 +5,17 @@
 
 int GetUniqNumber(int[] numbers)
 {
-    int number = new Random().Next(10, 100);       // генерируем рандомное число в промежутке, указанном в функции
-    for(int i=0; i<numbers.Length; i++)         // перебираем массив numbers, полученный от функции FillParallelepiped (массив collection)
+    int number = new Random().Next(10, 100);        // генерируем рандомное число в промежутке, указанном в функции
+    for(int i=0; i<numbers.Length; i++)             // перебираем массив numbers, полученный от функции FillParallelepiped (массив collection)
     {
-        while (number == numbers[i])               // сравниваем полученное число number с каждым элементом массива numbers
+        while (number == numbers[i])                // сравниваем полученное число number с каждым элементом массива numbers
         {
-            number = new Random().Next(10, 100);   // если какой-то элемент массива равен числу, меняем значение number на рандомное
-            i=0;                                // обнуляем счетчик, чтобы заново проверять новый number на равенство элементов массива numbers
+            number = new Random().Next(10, 100);    // если какой-то элемент массива равен числу, меняем значение number на рандомное
+            i=0;                                    // обнуляем счетчик, чтобы заново проверять новый number на равенство элементов массива numbers
         }
   
     }
-    return number;                              // если number НЕ раввно ни одному из элементов массива, вызвращаем его
+    return number;                                  // если number НЕ раввно ни одному из элементов массива, вызвращаем его
 }
 
 int[ , , ] FillParallelepiped(int x, int y, int z)
@@ -29,11 +29,6 @@ int[ , , ] FillParallelepiped(int x, int y, int z)
         {
             for (int k=0; k<z; k++)
             {
-                // int number = GetUniqNumber(collection);      // более громоздкая запись строчек 39-41
-                // collection[n] = number;                      //
-                // n++;                                         //
-                // parallelepiped[i, j, k] = number;            //
-
                 collection[n] = GetUniqNumber(collection);
                 parallelepiped[i, j, k] = collection[n];
                 n++;
