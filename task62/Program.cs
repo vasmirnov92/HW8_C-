@@ -6,6 +6,19 @@
 // и так пока не достигнем последнего числа
 // загвоздка с первым нулем, но можно начать с единицы
 
+// при заполнении будем идти не по длине масссива, а по меременным, типа leftBorder колонка, rigthBorder колонка, topBorder ряд, bottomBorder ряд
+// и уменьшать их по мере заполнения массива
+// 4 процесса заполнения массива
+// слева направо - фиксируем ряд topBorder, идем по колонкам от leftBorder до rightBorder
+
+// сверху вниз - фиксируем колонку rightBorder, идем по рядам от topBorder до bottomBorder
+
+// справа налево - фиксируем ряд bottomBorder, идем по колонкам от rightborder до leftBorder
+
+// снизу вверх - фиксируем колонку leftBorder, идем по рядам от bottomBorder до topBorder
+
+// и повторяем пока элемент не станет равным посчитанному количеству элементов
+
 
 
 void PrintArray(int[,] inArray)
@@ -23,33 +36,45 @@ void PrintArray(int[,] inArray)
 int[,] SpiralFilling (int rows, int columns, int num)
 {
     int[,] spiral = new int[rows, columns];
+
+    int topBorder = 0;              // ряд
+    int bottomBorder = rows-1;        // ряд
+    int leftBorder = 0;             // колонка
+    int rightBorder = columns-1;      // колонка
+
     int count = 1;
-    for (int j = 0; j<columns; j++)
+
+
+    while (count <= num)
     {
-        spiral[0, j] = count;
-        count++;
-    }
-    for (int i = 1; i<rows; i++)
-    {
-        spiral[i, columns-1] = count;
-        count++;
-    }
-    for (int j=columns-2; j>=0; j--)
-    {
-        spiral[rows-1, j] = count;
-        count++;
-    }
-    while(count<17)
-    {   
-        int i=rows-2;
-        int j=0;
-        // if (spiral[i,j] == 0)
-        // {
-             spiral[i,j] = count;
+        for (int j = leftBorder; j<=rightBorder; j++)     // слева направо - фиксируем ряд topBorder, идем по колонкам от leftBorder до rightBorder
+        {
+            spiral[topBorder, j] = count;
+            count++;
             
-            i=i-1;
-        // }
-        count++;
+        }
+        topBorder = topBorder + 1;
+
+        for (int i = topBorder; i<=bottomBorder; i++)            // сверху вниз - фиксируем колонку rightBorder, идем по рядам от topBorder до bottomBorder
+        {
+            spiral[i, rightBorder] = count;
+            count++;   
+        }
+        rightBorder = rightBorder - 1;
+
+        for (int j=rightBorder; j>=leftBorder; j--)        
+        {
+            spiral[bottomBorder, j] = count;
+            count++;   
+        }
+        bottomBorder = bottomBorder - 1;
+
+        for (int i = bottomBorder; i>=topBorder; i--)
+        {
+            spiral[i, leftBorder] = count;
+            count++;
+        }
+        leftBorder = leftBorder + 1;
     }
     return spiral;
 }
