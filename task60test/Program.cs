@@ -14,16 +14,13 @@ int GetUniqNumber(int[] numbers)
     int number = new Random().Next(1, 9);       // генерируем рандомное число в промежутке, указанном в функции
     for(int i=0; i<numbers.Length; i++)         // перебираем массив numbers, полученный от функции FillParallelepiped (массив collection)
     {
-        if (number == numbers[i])               // сравниваем полученное число number с каждым элементом массива numbers
+        while (number == numbers[i])               // сравниваем полученное число number с каждым элементом массива numbers
         {
             number = new Random().Next(1, 9);   // если какой-то элемент массива равен числу, меняем значение number на рандомное
             i=0;                                // обнуляем счетчик, чтобы заново проверять новый number на равенство элементов массива numbers
         }
+  
     }
-    // while (Array.IndexOf(numbers, number) != -1)     // решение Кирилла, которое не понял))
-    // {                                                //
-    //     number = new Random().Next(10, 38);          //
-    // }                                                //
     return number;                              // если number НЕ раввно ни одному из элементов массива, вызвращаем его
 }
 
