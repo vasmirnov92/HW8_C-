@@ -2,20 +2,32 @@
 // двузначных чисел. Напишите программу, которая будет построчно выводить 
 // массив, добавляя индексы каждого элемента.
 
+//                  ПРОБЛЕМА
+//                  функция GetUniqNumber как будто пропускает первый элемент массива для проверки, но где именно, не понятно
+//                  она ПОЧТИ работает
+//                  для проверки заполняю трехменый массив 2*2*2 числами от 1 до 8
+//                  если допустим ввести массив 3*3*3 - программа кращится, значит она все-таки не может заполнять массив 
+//                  одинаковыми числами, но почему-то пропускает нулевой элемент массива
+
 int GetUniqNumber(int[] numbers)
 {
-    int number = new Random().Next(1, 8);
-    while (Array.IndexOf(numbers, number) != -1)
+    int number = new Random().Next(10, 100);       // генерируем рандомное число в промежутке, указанном в функции
+    for(int i=0; i<numbers.Length; i++)         // перебираем массив numbers, полученный от функции FillParallelepiped (массив collection)
     {
-        number = new Random().Next(1, 8);
+        while (number == numbers[i])               // сравниваем полученное число number с каждым элементом массива numbers
+        {
+            number = new Random().Next(10, 100);   // если какой-то элемент массива равен числу, меняем значение number на рандомное
+            i=0;                                // обнуляем счетчик, чтобы заново проверять новый number на равенство элементов массива numbers
+        }
+  
     }
-    return number;
+    return number;                              // если number НЕ раввно ни одному из элементов массива, вызвращаем его
 }
 
 int[ , , ] FillParallelepiped(int x, int y, int z)
 {
-    int[ , , ] parallelepiped = new int[x, y, z];
-    int[] collection = new int[x*y*z];
+    int[ , , ] parallelepiped = new int[x, y, z];       // создаем трехмерный массив, заполненный нулями
+    int[] collection = new int[x*y*z];                  // создаем одномерный массив для хранения использованных чисел
     int n = 0;
     for (int i=0; i<z; i++)
     {
@@ -23,11 +35,16 @@ int[ , , ] FillParallelepiped(int x, int y, int z)
         {
             for (int k=0; k<z; k++)
             {
-                int number = GetUniqNumber(collection);
-                collection[n] = number;
+                // int number = GetUniqNumber(collection);      // более громоздкая запись строчек 39-41
+                // collection[n] = number;                      //
+                // n++;                                         //
+                // parallelepiped[i, j, k] = number;            //
+
+                collection[n] = GetUniqNumber(collection);
+                parallelepiped[i, j, k] = collection[n];
                 n++;
-                parallelepiped[i, j, k] = number;
-                // Console.WriteLine(String.Join(' ', collection)); // проверка сгенерированных цисел
+
+                // Console.WriteLine(String.Join(' ', collection));        // для проверки выводим уникальный массив collection
             }
         }
     }
